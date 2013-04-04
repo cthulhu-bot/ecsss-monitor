@@ -8,16 +8,19 @@ try {
   var db = mongoose.connection;
   db.on('error', console.error.bind(console, 'connection error:'));
   db.once('open', function callback() {
-    var wine = mongoose.Schema({
+    var page = mongoose.Schema({
       name:  String
-    })
+    });
+    var studentPage = mongoose.model('studentPage', page);
+    var studentIncidentPage = new studentPage({ name: 'Incident Page' });
+    console.log(studentIncidentPage.name);
   });
 }
 catch(err) {
   alert("Error: " + err.message);
 }
-app.get('/wines', wines.findAll);
-app.get('/wines/:id', wines.findById);
+app.get('/pages', pages.findAll);
+app.get('/pages/:id', pages.findById);
 
 
 // Prior to removing routing into route folder
