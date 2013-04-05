@@ -11,6 +11,7 @@ try {
     // Base Student Schema
     var pageSchema = mongoose.Schema({
         name:  String,
+        id:    String
     });
     // Schema Methods
     pageSchema.methods.getName = function() {
