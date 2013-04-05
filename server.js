@@ -13,9 +13,9 @@ try {
         name:  String,
     });
     // Schema Methods
-    pageSchema.methods.addName = function() {
-        var name = this.name ? "Student defined name is " + this.name : "No student name defined";
-        console.log("Added Name: " + name);
+    pageSchema.methods.getName = function() {
+        var name = this.name ? "Page defined name is " + this.name : "No student name defined";
+        console.log(name);
     }
     
     // Base Page Models
@@ -23,8 +23,11 @@ try {
     var ellPage = mongoose.model("ELL Page Model", pageSchema);
     var incidentPage = mongoose.model("Incident Page Model", pageSchema);
 
-    // Specific Student Definitions
-    var rowenStupplebeen = new student({ name: "Rowen Stupplebeen" });
+    // Specific Page Definitions
+    var suspectPage = new incidentPage({ name: "Suspect//Rowen Stupplebeen" });
+    suspectPage.save(function (err, suspectPage) {
+        err ? suspectPage.getName() : console.log(suspectPage.name + " successfully saved");
+    });
   });
 }
 catch(err) {
