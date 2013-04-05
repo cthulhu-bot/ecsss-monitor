@@ -1,19 +1,30 @@
-var express = require('express');
-var mongoose = require('mongoose');
-var wines = require('./routes/wines');
+var express = require("express");
+var mongoose = require("mongoose");
+var pages = require("./routes/pages");
 var app = express();
 
 try {
-  mongoose.connect('mongodb://localhost/test');
+  mongoose.connect("mongodb://localhost/test");
   var db = mongoose.connection;
-  db.on('error', console.error.bind(console, 'connection error:'));
-  db.once('open', function callback() {
-    var page = mongoose.Schema({
-      name:  String
+  db.on("error", console.error.bind(console, "connection error:"));
+  db.once("open", function callback() {
+    // Base Student Schema
+    var pageSchema = mongoose.Schema({
+        name:  String,
     });
-    var studentPage = mongoose.model('studentPage', page);
-    var studentIncidentPage = new studentPage({ name: 'Incident Page' });
-    console.log(studentIncidentPage.name);
+    // Schema Methods
+    pageSchema.methods.addName = function() {
+        var name = this.name ? "Student defined name is " + this.name : "No student name defined";
+        console.log("Added Name: " + name);
+    }
+    
+    // Base Page Models
+    var studentDemoPage = mongoose.model("Student Demographics Page Model", pageSchema);
+    var ellPage = mongoose.model("ELL Page Model", pageSchema);
+    var incidentPage = mongoose.model("Incident Page Model", pageSchema);
+
+    // Specific Student Definitions
+    var rowenStupplebeen = new student({ name: "Rowen Stupplebeen" });
   });
 }
 catch(err) {
@@ -21,23 +32,6 @@ catch(err) {
 }
 app.get('/pages', pages.findAll);
 app.get('/pages/:id', pages.findById);
-
-
-// Prior to removing routing into route folder
-//app.get('/wines', function(req, res) {
-//    res.send([{name:'wine1'}, {name:'wine2'}]);
-//});
-//app.get('/wines/:id', function(req, res) {
-//    res.send({id:req.params.id, name:  "SHIT WINE", description:  "THE SHITTIEST WINE"});
-//});
-
-// Default server build
-//var http = require('http');
-//http.createServer(function (req, res) {
-//    res.writeHead(200, {'Content-Type': 'text/plain'});
-//    res.end('Hello World\n');
-//}).listen(3000, '127.0.0.1');
-//console.log('Server running at http://127.0.0.1:3000/');
 
 app.listen(3000);
 console.log('Listening on port 3000...');
