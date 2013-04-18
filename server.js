@@ -8,11 +8,13 @@ try {
   var db = mongoose.connection;
   db.on("error", console.error.bind(console, "connection error:"));
   db.once("open", function callback() {
+
     // Base Student Schema
     var pageSchema = mongoose.Schema({
         name:  String,
         id:    String
     });
+
     // Schema Methods
     pageSchema.methods.getName = function() {
         var name = this.name ? "Page defined name is " + this.name : "No student name defined";
