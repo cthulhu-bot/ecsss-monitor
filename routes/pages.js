@@ -83,3 +83,15 @@ exports.deletePage = function(req, res) {
         });
     });
 }
+
+var populateDB = function() {
+    var pages = [
+    {
+    },
+    {
+    }];
+
+    db.collection('pages', function(err, collection) {
+        collection.insert(pages, {safe:true}, function(err, result) {});
+    });
+};
